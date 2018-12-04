@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import App from './components/App'
+
+// Import The bootstrap library
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 ReactDOM.render(
-  <div>
-    <h1>Hello world</h1>
-    <a href="/api/ping">Check the server</a>
-  </div>
+    <App />
   , document.getElementById('root'));
