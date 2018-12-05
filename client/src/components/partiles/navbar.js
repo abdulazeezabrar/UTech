@@ -37,7 +37,7 @@ export default class Example extends React.Component {
             <Link className="navbar-brand" to="/">UTech</Link>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav>
+              <Nav navbar>
                 <NavItem>
                   <Link to="/courses" className="nav-link">Courses</Link>
                 </NavItem>
