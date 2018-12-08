@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './partiles/navbar'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 import { BrowserRouter, Route } from 'react-router-dom'
 
+// pages
+import signup from './pages/signup';
+import login from './pages/login';
+import courses from './pages/courses';
+
 const main = () => <div>main page</div>;
 const about = () => <div>About</div>;
-const courses = () => <div>courses</div>;
 const trainers = () => <div>trainers</div>;
-const login = () => <div>trainers</div>;
-const signup = () => <div>trainers</div>;
 
 
-export default (props) => {
+class App extends Component{
+  componentDidMount(){
+    this.props.fetchUser();
+  }
+
+  render(){
     return (
       <div>
         <BrowserRouter>
@@ -28,3 +37,7 @@ export default (props) => {
       </div>
     );
   }
+}
+
+
+export default connect(null , actions)(App);

@@ -36,8 +36,12 @@ app.use('/auth', authRouter)
 app.use('/', indexRouter);
 
 app.use(function (err, req, res, next) {
-  res.status(500);
-  res.send({ Error: err });
+  res.status(400);
+  if(typeof err == 'string'){
+    res.send({ Error: err });
+  } else{
+    res.send({Error: 'Plese try again'});
+  }
 })
 
 // In production enviment make the send the react version

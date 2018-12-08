@@ -3,12 +3,15 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('mongoose').model('User');
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
   User.findById(id)
-    .then( user => done(null, user) )
+    .then( user => {
+      user.password = undefined;
+      done(null, user)
+    })
     .catch( err => done(err) )
 });
 
@@ -21,10 +24,13 @@ passport.use('local', new LocalStrategy({
     .then( user => {
       if(user){
         if (!user.comparePassword(password)) {
-          return done(null, false);
+          return done('Password dose not match', false);
+        } else {
+          user.password = undefined;
+          return done(null, user);
         }
       } else {
-        return done(null, false);
+        return done('email dose not exsit', false);
       }
     })
     .catch(err => done(err));
