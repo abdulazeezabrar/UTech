@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { Schema } = mongoose;
+const {ObjectId} = Schema.Types;
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   email: {
     type: String,
     unique: [true, 'This email is alerdy registerd'],
@@ -11,7 +13,11 @@ const UserSchema = new mongoose.Schema({
   },
   firstname: {type: String,  required: true},
   password: {type: String,  required: true},
-  lastname: {type: String, required: true}
+  lastname: {type: String, required: true},
+  type:{
+    student: { type: Schema.Types.ObjectId, ref: 'Student'},
+    instructor: { type: Schema.Types.ObjectId, ref: 'Instructor'}
+  }
 });
 
 

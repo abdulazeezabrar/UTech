@@ -15,6 +15,8 @@ function init(){
 
   // Require mongoose Schema
   require('./user');
+  require('./student');
+  require('./instructor');
 }
 
 
