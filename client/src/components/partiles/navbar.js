@@ -82,7 +82,7 @@ class Header extends React.Component {
                   <NavLink to="/courses" className="nav-link" activeClassName="active" >Courses</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to="/trainers" className="nav-link" activeClassName="active" >Trainers</NavLink>
+                  <NavLink to="/instructors" className="nav-link" activeClassName="active" >Instructors</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/about" className="nav-link" activeClassName="active" >About</NavLink>

@@ -9,10 +9,11 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import signup from './pages/signup';
 import login from './pages/login';
 import courses from './pages/courses';
+import profile from './pages/profile';
+import about from './pages/about';
+import main from './pages/main';
+import instructors from './pages/instructors';
 
-const main = () => <div>main page</div>;
-const about = () => <div>About</div>;
-const trainers = () => <div>trainers</div>;
 
 
 class App extends Component{
@@ -29,9 +30,10 @@ class App extends Component{
             <Route path="/" exact component={main} />
             <Route path="/about" component={about} />
             <Route path="/courses" exact component={courses} />
-            <Route path="/trainers" exact component={trainers} />
+            <Route path="/instructors" exact component={instructors} />
             <Route path="/login" exact component={login} />
             <Route path="/signup" exact component={signup} />
+            <Route path="/profile" exact component={profile} />
           </div>
         </BrowserRouter>
       </div>
