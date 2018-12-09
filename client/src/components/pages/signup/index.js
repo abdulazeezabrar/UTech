@@ -33,7 +33,7 @@ export default class Signup extends Component {
           <div className="col-lg-6 col-md-8">
           <Link to="/" >Back</Link>
             <h1>Singup</h1>
-            <SingupForm handleAlert={console.log} />
+            <SingupForm handleAlert={(error) => this.setState({error, visible: true})} />
           </div>
         </div>
       </div>

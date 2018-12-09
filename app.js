@@ -41,6 +41,7 @@ app.use(function (err, req, res, next) {
     res.send({ Error: err });
   } else{
     res.send({Error: 'Plese try again'});
+    console.log(err);
   }
 })
 

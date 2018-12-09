@@ -27,12 +27,26 @@ class SignupForm extends Component{
       <form onSubmit={this.props.handleSubmit( values => this.props.signupUser(values, history, handleAlert) )}>
         {this.renderFields()}
         <div>
+          {/* Radio buttons */}
+          <div>
+            <label>Type</label>
+            <div>
+              <label>
+                <Field name="type" component="input" type="radio" value="student" />{' '} Student
+              </label>
+              <label className="d-block">
+                <Field name="type" component="input" type="radio" value="instructor" />{' '} Instructor
+              </label>
+            </div>
+          </div>
+          {/* End Radio buttons */}
           <button type="submit" className="btn btn-primary right">Signup !</button>
         </div>
       </form>
     );
   }
 }
+
 
 function validate(values){
   var errors = {};
@@ -60,5 +74,6 @@ function validate(values){
 
 export default reduxForm({
   form: 'signupForm',
-  validate
+  validate,
+  initialValues: {type: 'student'}
 })( withRouter( connect(null, actions)( SignupForm )) )

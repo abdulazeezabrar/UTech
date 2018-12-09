@@ -3,9 +3,7 @@ const { Schema } = mongoose;
 
 const StudentSchema = new Schema({
   courses:[{type: Schema.Types.ObjectId, ref: 'Course'}],
-  user: {type: Schema.Types.ObjectId, ref: 'User'},
-  about: {type: 'String', default: 'Greate instructor'},
-  students: [{type: Schema.Types.ObjectId, ref: 'Student'}]
+  user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 module.exports = mongoose.model('Instructor', StudentSchema);

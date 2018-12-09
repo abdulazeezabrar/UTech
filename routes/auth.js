@@ -3,6 +3,8 @@ var passportConf = require('../config/passport');
 var express = require('express');
 var router = express.Router();
 const User = require('mongoose').model('User');
+const Student = require('mongoose').model('Student');
+const Instructor = require('mongoose').model('Instructor');
 
 
 
@@ -35,10 +37,12 @@ router.post('/signup',  (req, res, next) => {
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('password', 'passport should at least 6 chareters').isLength({min: 6});
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+  req.checkBody('type', 'You should provide us a type of an account')
+    .custom((value) => (value == "student" || value == "instructor" ));
   var errors = req.validationErrors();
   // make sure there is no errors
   if(errors){
-    res.status(401).send({ Error: error });
+    res.status(401).send({ Error: errors[0].msg });
   } else {
     //check if existingUser
     User.findOne({email: req.body.email})
@@ -51,17 +55,30 @@ router.post('/signup',  (req, res, next) => {
             password: req.body.password,
             email: req.body.email,
             firstname: req.body.firstname,
-            lastname: req.body.lastname
+            lastname: req.body.lastname,
           })
           .save()
             .then((user) => {
-              req.logIn(user,  err => {
-                if(err) return next(err);
-                user.password = undefined;
-                res.status(200).send({user: user});
-              });
+              // save create the instructor or student and add user._id to it
+              var UserTypeModel = req.body.type === 'student'? Student : Instructor;
+              new UserTypeModel({user: user._id}).save()
+                .then((UserType) => {
+                  // add the instructor or student _id to user object
+                  user.type[req.body.type] = UserType._id;
+                  user.save()
+                    .then( user => {
+                      // logIn to the user
+                      req.logIn(user,  err => {
+                        if(err) return next(err);
+                        user.password = undefined;
+                        res.status(200).send({user: user});
+                      });
+                    })
+                    .catch(next)
+                })
+                .catch(next)
             })
-            .catch((e) => { next(err)})
+            .catch( next )
         }
       });
   }
