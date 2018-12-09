@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 import {
   Collapse,
@@ -58,7 +59,7 @@ class Header extends React.Component {
                   profile
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
+                <DropdownItem onClick={this.props.logoutUser}>
                   logout
                 </DropdownItem>
               </DropdownMenu>
@@ -100,4 +101,4 @@ function mapStateToProps(state){
   return {user: state.authUser};
 }
 
-export default withRouter(connect(mapStateToProps)(Header) );
+export default withRouter(connect(mapStateToProps, actions  )(Header) );

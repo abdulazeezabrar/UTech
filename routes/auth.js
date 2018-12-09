@@ -16,7 +16,7 @@ router.post('/login', passport.authenticate('local', {}), (req, res) => {
 // when user get logout
 router.get('/logout', (req, res,next) => {
   req.logout();
-  res.send({msg: 'loged out!'});
+  res.send({user: false});
 });
 
 

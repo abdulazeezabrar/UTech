@@ -22,14 +22,14 @@ export const signupUser = (signupFormValues, history, handleAlert) => (dispatch)
       dispatch({ type: FETCH_USER, payload: false });
       // Display the error to the user
       handleAlert(err.response.data.Error);
-    });}
+    });
+}
 
 // Login
 export const loginUser = (loginFormValues, history, handleAlert) => (dispatch) => {
   axios
     .post('/auth/login', loginFormValues)
     .then(res => {
-      console.log(res);
       dispatch({ type:FETCH_USER , payload: res.data.user });
       // Redirect the user to the home page
       history.push('/');
@@ -38,5 +38,18 @@ export const loginUser = (loginFormValues, history, handleAlert) => (dispatch) =
       dispatch({ type: FETCH_USER, payload: false });
       // Display the error to the user
       handleAlert(err.response.data.Error);
+    });
+}
+
+// Log out
+export const logoutUser = () => (dispatch) => {
+  axios
+    .get('/auth/logout')
+    .then(res => {
+      dispatch({ type:FETCH_USER , payload: res.data.user });
+      // Redirect the user to the home page
+    })
+    .catch(err => {
+      window.location = "/";
     });
 }
