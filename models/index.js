@@ -17,6 +17,8 @@ function init(){
   require('./user');
   require('./student');
   require('./instructor');
+  require('./course');
+  require('./lesson');
 }
 
 

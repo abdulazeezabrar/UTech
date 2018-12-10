@@ -8,4 +8,4 @@ const InstructorSchema = new Schema({
   students: [{type: Schema.Types.ObjectId, ref: 'Student'}]
 });
 
-module.exports = mongoose.model('Student', InstructorSchema);
+module.exports = mongoose.model('Instructor', InstructorSchema);
