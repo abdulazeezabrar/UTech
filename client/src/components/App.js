@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Header from './partiles/navbar'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-
 import { BrowserRouter, Route } from 'react-router-dom'
+import { hasRole } from '../utils';
+import * as actions from '../actions';
 
 // pages
 import signup from './pages/signup';
@@ -22,6 +22,9 @@ class App extends Component{
   }
 
   render(){
+    const { user } = this.props;
+    const student = hasRole(user, 'student');
+    const instructor = hasRole(user, 'instructor');
     return (
       <div>
         <BrowserRouter>
@@ -31,9 +34,9 @@ class App extends Component{
             <Route path="/about" component={about} />
             <Route path="/courses" exact component={courses} />
             <Route path="/instructors" exact component={instructors} />
-            <Route path="/login" exact component={login} />
-            <Route path="/signup" exact component={signup} />
-            <Route path="/profile" exact component={profile} />
+            {!user && <Route path="/login" exact component={login} />}
+            {!user && <Route path="/signup" exact component={signup} />}
+            {user && <Route path="/profile" exact component={profile} />}
           </div>
         </BrowserRouter>
       </div>
@@ -41,5 +44,9 @@ class App extends Component{
   }
 }
 
+function mapStateToProps(state){
+  return {user: state.authUser};
+}
 
-export default connect(null , actions)(App);
+
+export default connect(mapStateToProps , actions)(App);
