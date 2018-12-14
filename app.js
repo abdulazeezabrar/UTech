@@ -32,7 +32,9 @@ app.use(expressValidator())
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
+var APIRouter = require('./routes/api');
 app.use('/auth', authRouter)
+app.use('/api', APIRouter)
 app.use('/', indexRouter);
 
 app.use(function (err, req, res, next) {
