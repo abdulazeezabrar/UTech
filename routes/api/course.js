@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Course = mongoose.model('Course');
 
 // Post on /api/course to Create new Course
-router.post('/', function(req, res, next) {
+router.post('/', (req, res, next) => {
   // TODO: Add course image feture
   const {aboutPage, title, description} = req.body;
   req.checkBody('aboutPage', 'aboutPage is required').notEmpty();
@@ -34,9 +34,9 @@ router.post('/', function(req, res, next) {
 });
 
 // Get /api/courses to fetch all courses
-router.get('/', function (req, res, next){
+router.get('/', (req, res, next) => {
   console.log('Course response');
-  Course.find({}, '-lessons -rates')
+  Course.find({}, '-lessons -rates -aboutPage')
     .populate('instructor', "user -_id")
     .then((data) => {
       res.send(data)
@@ -44,5 +44,15 @@ router.get('/', function (req, res, next){
     .catch(next);
 });
 
+
+// Get single course
+router.get('/:id', (req, res, next) => {
+  const id = req.params.id;
+  Course.findById(id)
+    .populate('lessons')
+    .then((course) => {
+      res.send(course);
+    });
+});
 
 module.exports = router;
