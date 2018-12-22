@@ -9,6 +9,8 @@ import App from './components/App'
 
 // Import The bootstrap library
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './style.css';
 
 import reducers from './reducers'
 

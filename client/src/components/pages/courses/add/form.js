@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import * as actions from '../../../actions';
-import formInput from './../../partiles/formInput';
+import * as actions from '../../../../actions';
+import formInput from './../../../partiles/formInput';
 
 const FIELDS =[
-  {name:"email", label:'Email', type: 'email'},
-  {name:"password", label:'Password', type: 'password'}
+  {name:"title", label:'Title', type: 'text'},
+  {name:"aboutPage", label:'About Course', type: 'draftEditor'},
+  {name:'description', label:'small Description', type:'text', maxlength:"200"}
 ];
 
-class loginForm extends Component{
+class addCourseForm extends Component{
   renderFields(){
     return FIELDS.map( props => {
       return  <Field {...props} component={formInput} key={props.name}/>
@@ -21,7 +22,7 @@ class loginForm extends Component{
   render(){
     const {history, handleAlert} = this.props;
     return (
-      <form onSubmit={this.props.handleSubmit( values => this.props.loginUser(values, history, handleAlert) )}>
+      <form onSubmit={this.props.handleSubmit( values => this.props.CreateCourse(values, history) )}>
         {this.renderFields()}
         <div>
           <button type="submit" className="btn btn-primary right">Login !</button>
@@ -33,10 +34,6 @@ class loginForm extends Component{
 
 function validate(values){
   var errors = {};
-  // Check the email
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
-  }
   // make sure the feilds are not empty
   FIELDS.forEach((feild) => {
     if(!values[feild.name]){
@@ -44,14 +41,17 @@ function validate(values){
     }
   });
   // make sure the password length is greater than 5
-  if(values.password && values.password.length < 6){
-    errors.password = 'Password length should be 6 or greater'
+  if(values.description > 200){
+    errors.description = 'Description should be shorter than 200 chareters';
+  }
+  if(values.title < 6){
+    errors.title = 'title length should be 6 or greater'
   }
 
   return errors;
 }
 
 export default reduxForm({
-  form: 'signupForm',
-  validate
-})( withRouter( connect(null, actions)( loginForm )) )
+  form: 'AddCourse',
+  validate,
+})( withRouter( connect(null, actions)( addCourseForm )) )

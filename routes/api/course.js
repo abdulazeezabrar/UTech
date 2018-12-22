@@ -5,16 +5,21 @@ const Course = mongoose.model('Course');
 // Post on /api/course to Create new Course
 router.post('/', function(req, res, next) {
   // TODO: Add course image feture
-  const {aboutPage, title} = req.body;
-  const instructor = req.user._id;
+  const {aboutPage, title, description} = req.body;
   req.checkBody('aboutPage', 'aboutPage is required').notEmpty();
   req.checkBody('title', 'title is required').notEmpty();
+  req.checkBody('description', 'description chareters should betwen 0 and 200').isLength({min:1, max: 200});
+
   // Get the maximan of the length of the title
   req.checkBody('title', 'title should at least 6 chareters').isLength({min: 6});
+  const instructor = req.user.type.instructor;
   var course = new Course({
-    instructor, aboutPage, title, publishDate: new Date()
+    instructor,
+    aboutPage: JSON.stringify(req.body.aboutPage),
+    title,
+    description,
+    publishDate: new Date()
   });
-
   var errors = req.validationErrors();
   // make sure there is no errors
   if(errors){
@@ -27,5 +32,17 @@ router.post('/', function(req, res, next) {
       .catch(next);
   }
 });
+
+// Get /api/courses to fetch all courses
+router.get('/', function (req, res, next){
+  console.log('Course response');
+  Course.find({}, '-lessons -rates')
+    .populate('instructor', "user -_id")
+    .then((data) => {
+      res.send(data)
+    })
+    .catch(next);
+});
+
 
 module.exports = router;

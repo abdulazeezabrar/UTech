@@ -14,12 +14,13 @@ import about from './pages/about';
 import main from './pages/main';
 import instructors from './pages/instructors';
 
-
+import addCourse from  './pages/courses/add';
 
 class App extends Component{
   componentDidMount(){
     this.props.fetchUser();
   }
+
 
   render(){
     const { user } = this.props;
@@ -37,6 +38,8 @@ class App extends Component{
             {!user && <Route path="/login" exact component={login} />}
             {!user && <Route path="/signup" exact component={signup} />}
             {user && <Route path="/profile" exact component={profile} />}
+            {instructor && <Route path='/courses/add' exact component={addCourse} />}
+
           </div>
         </BrowserRouter>
       </div>

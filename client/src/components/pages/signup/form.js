@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import * as actions from '../../../actions';
-import formInput from '../../partiles/formInput';
+import formInput from './../../partiles/formInput';
 
 const FIELDS =[
   {name:"firstname", label:'First Name', type: 'text'},
@@ -15,8 +15,8 @@ const FIELDS =[
 
 class SignupForm extends Component{
   renderFields(){
-    return FIELDS.map(({name, label, type}) => {
-      return  <Field name={name} label={label} component={formInput} type={type} key={name}/>
+    return FIELDS.map( props => {
+      return  <Field {...props} component={formInput} key={props.name}/>
     });
   }
 

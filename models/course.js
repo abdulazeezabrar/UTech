@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const CourseSchema = new Schema({
-  title: {type: String, default:[true, "You sould provide us title"]},
+  title: {type: String, default:[true, "You should provide us Title"]},
+  description: {type:String, default:[true, 'You should provide us Description']},
   lessons: [{type: Schema.Types.ObjectId, ref: 'Lesson'}],
   instructor: {type: Schema.Types.ObjectId, ref: 'Instructor'},
   aboutPage: {type: String, default: '<h1>about the course</h1>'},
@@ -24,6 +25,8 @@ CourseSchema.pre('save', function(next) {
     }
     next();
 });
+
+
 
 CourseSchema.getRating = function(rates){
   // Get array of number (rates)

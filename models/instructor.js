@@ -8,4 +8,13 @@ const InstructorSchema = new Schema({
   students: [{type: Schema.Types.ObjectId, ref: 'Student'}]
 });
 
+var autoPopulateLead = function(next) {
+  this.populate('user', 'firstname lastname -_id');
+  next();
+};
+
+InstructorSchema.
+  pre('findOne', autoPopulateLead).
+  pre('find', autoPopulateLead);
+
 module.exports = mongoose.model('Instructor', InstructorSchema);
